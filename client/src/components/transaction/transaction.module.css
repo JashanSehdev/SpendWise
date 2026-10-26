@@ -1,0 +1,17 @@
+
+.inputAmount{
+    text-align: center;
+    font-size: 40px;
+    color : white;
+    background-color: transparent;
+    border : none;
+    outline: none;
+    margin: auto;
+    scrollbar-width: none;
+}
+
+.page {
+    justify-content: center;
+    margin-top: 3rem;
+    
+}

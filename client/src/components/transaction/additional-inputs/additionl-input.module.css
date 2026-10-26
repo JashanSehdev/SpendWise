@@ -1,0 +1,26 @@
+.optionBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.container {
+    display: flex;
+    background-color: #211f1e ;
+    padding: 1rem;
+    border-radius: 20px;
+    border: 1px solid #737373;
+
+}
+.divider {
+
+    border-color: #737373 !important;
+}
+
+.input {
+    color: white !important;
+}
+.input:focus {
+    outline-color: #737373 !important;
+}
