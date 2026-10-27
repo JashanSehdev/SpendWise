@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module.js';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthMiddleware } from './middleware/auth.middleware.js';
+import { AccountModule } from './account/account.module.js';
+import { TransactionModule } from './transaction/transaction.module.js';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -43,6 +45,10 @@ import { AuthMiddleware } from './middleware/auth.middleware.js';
     }),
 
     AuthModule,
+
+    AccountModule,
+
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,8 +5,9 @@ export const transactionSchema = z.object({
     type : z.enum(TransactionType),
     amount : z.coerce.number().min(0),
     category : z.string(),
-    createdAt : z.string(),
+    time : z.string(),
     note : z.string(),
+    counterParty : z.string().min(1, 'To / From Required')
 })
 
 export type TransactionInput = z.input<typeof transactionSchema>

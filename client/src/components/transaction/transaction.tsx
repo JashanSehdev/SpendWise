@@ -1,26 +1,53 @@
 "use client";
-import { Button, Stack } from "@mui/material";
+import { Button, InputLabel, Stack, TextField } from "@mui/material";
 import styles from "./transaction.module.css";
 import TransactionNavbar from "./transaction-navbar/transaction-navbar.page";
 import Categories from "./category/category";
 import AdditionalInput from "./additional-inputs/additional-input";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { TransactionInput, TransactionOutput, transactionSchema } from "./transaction.type";
+import {
+  TransactionInput,
+  TransactionOutput,
+  transactionSchema,
+} from "./transaction.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TransactionType } from "@/enum/transaction.enum";
+import { useEffect } from "react";
+import { enqueueSnackbar } from "notistack";
+import { useTransaction } from "@/hooks/useTransaction";
 
 export default function Transaction() {
-  const { register, setValue, watch, handleSubmit } = useForm<TransactionInput, unknown, TransactionOutput>({
+  const { createTransaction } = useTransaction();
+
+  const {
+    register,
+    setValue,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TransactionInput, unknown, TransactionOutput>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       type: TransactionType.EXPENSE,
-      createdAt: new Date().toISOString().slice(0, 16),
+      time: new Date().toISOString().slice(0, 16),
+      category: "Food",
     },
   });
 
-  const onSubmit  : SubmitHandler<TransactionOutput>  = (data) => {
-    console.log(data)
-  }
+  useEffect(() => {
+    const errorKeys = Object.keys(errors) as Array<keyof TransactionInput>;
+
+    if (errorKeys.length > 0) {
+      enqueueSnackbar(errors[errorKeys[0]]?.message, {
+        variant: "warning",
+        autoHideDuration: 2000,
+      });
+    }
+  }, [errors]);
+
+  const onSubmit: SubmitHandler<TransactionOutput> = (data) => {
+    createTransaction(data);
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack className={styles.page} spacing={2}>
@@ -33,10 +60,22 @@ export default function Transaction() {
           min={0}
           {...register("amount")}
         />
-        <Categories setValue={setValue} category={watch("category")} />
 
-        <AdditionalInput register={register} />
-      <Button type="submit" variant="dashed">Go</Button>
+        <Stack>
+          <InputLabel>
+            {watch("type") === TransactionType.EXPENSE ? "To" : "From"}
+          </InputLabel>
+          <TextField
+            placeholder={"eg: ABC Shop"}
+            {...register("counterParty")}
+          />
+        </Stack>
+        <Categories setValue={setValue} category={watch("category")} />
+        <input hidden {...register("note")} />
+        <AdditionalInput setValue={setValue} register={register} />
+        <Button type="submit" variant="contained">
+          Go
+        </Button>
       </Stack>
     </form>
   );

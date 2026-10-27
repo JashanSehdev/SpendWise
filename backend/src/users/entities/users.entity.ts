@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, type Relation, UpdateDateColumn } from "typeorm";
 import { Role } from "../enum/roles.enum.js";
+import { Account } from "../../account/entities/account.entity.js";
 
 @Entity('users')
 
@@ -43,4 +44,8 @@ export class User {
 
     @UpdateDateColumn()
     updatedAt : Date
+
+    @OneToMany(() => Account, (account) => account.user)
+    accounts : Relation<Account[]>
+
 }

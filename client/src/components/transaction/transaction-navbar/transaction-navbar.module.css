@@ -8,11 +8,14 @@
 }
 
 .navigators {
-    padding: 0.2rem 0.5rem;
+    padding: 0.2rem 1rem;
+    transition: background-color 0.3s ease-out, color 0.3s ease-out;
+        border-radius: 30px;
 }
 
-.selected { 
-    border-radius: 30px;
+.navigators.selected { 
+
     color: black;
     background-color: white;
+    
 }

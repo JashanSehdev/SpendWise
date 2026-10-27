@@ -1,16 +1,10 @@
-import { Box, Divider, Input, Stack, Typography } from "@mui/material";
+import { Box, Button, Divider, Input, Stack, Typography } from "@mui/material";
 import styles from "./additionl-input.module.css";
 import { register } from "module";
-import { FieldName, UseFormRegister } from "react-hook-form";
+import { FieldName, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { TransactionInput } from "../transaction.type";
-
-const getTodayString = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
+import { useState } from "react";
+import Note from "./note/note";
 
 type Options = {
   label: string;
@@ -22,22 +16,18 @@ type Options = {
 const options: Options[] = [
   {
     label: "Date",
-    name: "createdAt",
+    name: "time",
     type: "datetime-local",
     placeholder: "Enter the Date",
-  },
-  {
-    label: "Note",
-    name: "note",
-    type: "text",
-    placeholder: "Enter a note",
   },
 ];
 
 type Prop = {
-  register: UseFormRegister<TransactionInput>;
+  register: UseFormRegister<TransactionInput>
+  setValue: UseFormSetValue<TransactionInput>;
 };
-export default function AdditionalInput({ register }: Prop) {
+export default function AdditionalInput({ register, setValue }: Prop) {
+  const [openNote, setOpenNote] = useState<boolean>(false);
   return (
     <Stack className={styles.container} spacing={1}>
       {options.map((item) => (
@@ -54,6 +44,11 @@ export default function AdditionalInput({ register }: Prop) {
           <Divider className={styles.divider} />
         </Stack>
       ))}
+      <Box className={styles.optionBox}>
+        <Typography>Note</Typography>
+        <Button onClick={() => setOpenNote(true)}>Add a Note</Button>
+      </Box>
+      <Note setValue={setValue} open={openNote} setOpen={setOpenNote} />
     </Stack>
   );
 }

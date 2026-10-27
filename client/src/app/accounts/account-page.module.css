@@ -1,0 +1,10 @@
+.button_container{
+    align-items: end;
+}
+.create_button {
+    max-width: 200px;
+}
+
+.container{
+    padding: 2rem
+}

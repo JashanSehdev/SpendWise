@@ -13,20 +13,22 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { useDispatch, useSelector } from 'react-redux';
 import authReducer from './auth/auth.slice'
+import accountReducer from './account/account.slice'
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist : ['auth']
+  whitelist : ['auth', 'account']
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  account : accountReducer
 });
 
 const persistedReducer = persistReducer(
   persistConfig,
-  rootReducer
+  rootReducer,
 );
 
 export const store = configureStore({

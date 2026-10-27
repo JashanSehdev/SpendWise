@@ -7,7 +7,9 @@
 
 body {
   background-color: #1a1816;
-  color: #dedbda
+  color: #dedbda;
+  height: 100%;
+  width: 100%;
 }
 
 /* :root {

@@ -18,10 +18,7 @@ const options: Options[] = [
     name: "income",
     value: TransactionType.INCOME,
   },
-  {
-    name: "transfer",
-    value: TransactionType.TRANSFER,
-  },
+
 ];
 
 interface Prop {
@@ -34,11 +31,12 @@ export default function TransactionNavbar({
 }: Prop) {
   return (
     <Container>
-      <Stack direction={"row"} spacing={2} className={`${styles.bar} `}>
+      <Stack direction={"row"} spacing={0.2} className={`${styles.bar} `}>
         {options.map((item) => (
           <Box
             key={item.name}
-            className={`${styles.navigators} ${selected === item.value && styles.selected}`}
+            className={`${styles.navigators} ${selected === item.value ? styles.selected : ""}`
+          }
             onClick={() => setValue('type', item.value)}
           >
             <Typography>{item.name}</Typography>
